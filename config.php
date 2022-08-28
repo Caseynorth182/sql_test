@@ -11,3 +11,13 @@ try {
 } catch (PDOException $error) {
     die("Could not connect to the database $dbname :" . $error->getMessage());
 }
+
+//debug func
+function debug($data)
+{
+    echo '<br>';
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+    echo '<br>';
+}

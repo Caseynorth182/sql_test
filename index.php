@@ -1,20 +1,15 @@
-<!-- 1. Нужно вывести список товаров, у которых есть варианты с нулевой ценой.
-Результатом должна быть таблица, где 2 столбца: Product_name и Count -->
-
+<?php
+// 3. Нужно написать запрос по обновлению товара: если у товара остаток 0 (stock), то нужно добавить к имени  "- закончился" 
+?>
 <?php require('config.php');
 
-//debug func
-function debug($data)
-{
-    echo '<br>';
-    echo '<pre>';
-    print_r($data);
-    echo '</pre>';
-    echo '<br>';
-}
+
 //take rows from bd
 try {
-    $sql = "SELECT wp_products.name, wp_variants.price FROM wp_products INNER JOIN wp_variants ON wp_products.id = wp_variants.product_id WHERE wp_variants.price < 1";
+    $sql = "UPDATE wp_products
+            INNER JOIN wp_variants   ON wp_products.id = wp_variants.product_id
+            SET wp_products.name =  CONCAT('-', wp_products.name) 
+            WHERE wp_variants.stock = 0";
     $prepare = $conn->prepare($sql);
     $result = $conn->query($sql);
     $rows = $result->fetchALL(PDO::FETCH_ASSOC);
